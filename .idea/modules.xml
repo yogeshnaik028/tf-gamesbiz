@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../cicd-pipeline/.idea/cicd-pipeline.iml" filepath="$PROJECT_DIR$/../cicd-pipeline/.idea/cicd-pipeline.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/tensorflow-gameprice.iml" filepath="$PROJECT_DIR$/.idea/tensorflow-gameprice.iml" />
+    </modules>
+  </component>
+</project>
