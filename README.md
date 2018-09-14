@@ -1,8 +1,8 @@
 ## Packaged Python Alogrithm for Predicting Video Game Prices
 
+----
 
 The aim of this project is to serve as a simple example of implementing a model in tensorflow.
-----
 
 ### Prerequisites
 
@@ -36,4 +36,4 @@ pip install https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.8.0-p
 
 ## Authors
 
-* **Mustafa Waheed** - *Associate Data Scientist* - [AWS ML Solutions Lab](https://aws.amazon.com/ml-solutions-lab/)
+* **Mustafa Waheed** - *Data Scientist* 
