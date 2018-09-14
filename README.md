@@ -28,12 +28,12 @@ pip install https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.8.0-p
 ----
 
 
-## Built primarily With
+### Built primarily With
 
 * [Tensorflow](https://www.tensorflow.org/) - Open Source Machine Learning framework
 
 
 
-## Authors
+### Authors
 
 * **Mustafa Waheed** - *Data Scientist* 
