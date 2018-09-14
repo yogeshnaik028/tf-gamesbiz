@@ -19,6 +19,7 @@ develop-eggs/
 downloads/
 eggs/
 .eggs/
+.idea
 lib/
 lib64/
 parts/
@@ -28,12 +29,9 @@ var/
 .installed.cfg
 *.egg
 wheelhouse/
-cover/
-gameprice/logs/
-dist/.idea/
+*.idea/
 *.manifest
 *.spec
 run.py
 Dockerfile
-*.idea
-*.idea/
+
