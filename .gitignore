@@ -1,19 +1,21 @@
 # Mac
 .DS_Store
-.idea
+
 ### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+
 # C extensions
 *.so
+
 # Distribution / packaging
 .Python
 env/
 build/
 develop-eggs/
-# dist/
+
 downloads/
 eggs/
 .eggs/
@@ -33,3 +35,5 @@ dist/.idea/
 *.spec
 run.py
 Dockerfile
+*.idea
+*.idea/
