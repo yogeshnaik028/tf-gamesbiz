@@ -1,4 +1,4 @@
-## Packaged Python Alogrithm for Predicting Video Game Prices
+## Packaged Python Alogrithm for Predicting Video Game Earnings
 
 ----
 
