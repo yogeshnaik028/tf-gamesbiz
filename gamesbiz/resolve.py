@@ -54,89 +54,24 @@ class sagemaker(object):
 
     @staticmethod
     def check():
-        """
-        Checks if we are running in a SageMaker context
-
-        Returns:
-            result (bool): Whether or not standard SageMaker paths exist
-        """
         path = os.path.join(*[os.sep, 'opt', 'ml'])
         return os.path.exists(path)
 
     @staticmethod
     def model(filename):
-        """
-        The path to model artifacts.
-
-        Your algorithm should write all final model artifacts to this directory.
-        Amazon SageMaker copies this data as a single object in compressed tar
-        format to the S3 location that you specified in the CreateTrainingJob
-        request. If multiple containers in a single training job write to this
-        directory they should ensure no file/directory names clash. Amazon
-        SageMaker aggregates the result in a tar file and uploads to S3.
-
-        Arguments:
-            filename (str): The name of the file which will be written to S3
-        Returns:
-            path (str): The absolute path to the model output directory
-        """
         return os.path.join(*[os.sep, 'opt', 'ml', 'model', filename])
 
     @staticmethod
     def input(channel, filename):
-        """
-        The path to input artifacts.
-
-        Amazon SageMaker allows you to specify "channels" for your docker container.
-        The purpose of a channel is to copy data from S3 to a specified directory.
-        Amazon SageMaker makes the data for the channel available in the
-        /opt/ml/input/data/channel_name directory in the Docker container.
-        For example, if you have three channels named training, validation, and
-        testing, Amazon SageMaker makes three directories in the Docker container:
-
-            /opt/ml/input/data/training
-            /opt/ml/input/data/validation
-            /opt/ml/input/data/testing
-
-        Arguments:
-            channel (str): The name of the channel which contains the filename
-            filename (str): The name of the file within a specific channel
-        Returns:
-            path (str): The absolute path to the specified channel file
-        """
         return os.path.join(*[os.sep, 'opt', 'ml', 'input', 'data', channel, filename])
 
     @staticmethod
     def failure():
-        """
-        The path to the failure file.
-
-        If training fails, after all algorithm output (for example, logging)
-        completes, your algorithm should write the failure description to this
-        file.
-
-        Returns:
-            path (str): The absolute path to the failure file
-        """
         return os.path.join(*[os.sep, 'opt', 'ml', 'output', 'failure'])
 
     @staticmethod
     def output(filename):
-        """
-        The path to the output artifacts.
-        Your algorithm should write all final model artifacts to this directory.
-        Amazon SageMaker copies this data as a single object in compressed tar
-        format to the S3 location that you specified in the CreateTrainingJob
-        request. If multiple containers in a single training job write to this
-        directory they should ensure no file/directory names clash. Amazon SageMaker
-        aggregates the result in a tar file and uploads to S3.
-        Arguments:
-            filename (str): The name of the file which will be written back to S3
-        Returns:
-            path (str): The absolute path to the model output directory
-        """
         return os.path.join(*[os.sep, 'opt', 'ml', 'model', filename])
-
 
 # ------------------------------------------------------------------------------
 # Local Paths

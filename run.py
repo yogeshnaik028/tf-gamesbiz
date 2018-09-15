@@ -1,2 +1,2 @@
-from gamesbiz.train import export
-export()
+from gamesbiz.train import entry_point
+entry_point()

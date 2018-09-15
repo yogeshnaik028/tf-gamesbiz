@@ -4,11 +4,16 @@ import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 import tensorflow as tf
 
-
 from gamesbiz.resolve import paths
 
 
-def export():
+def entry_point():
+    """
+    This function acts as the entry point for a docker container that an be used to train
+    the model either loally or on Sagemaker depending in whichever context its called in.
+
+    """
+
     # Turn off TensorFlow warning messages in program output
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
@@ -37,10 +42,9 @@ def export():
     Y_scaled_testing = Y_scaler.transform(Y_testing)
 
     # define model parameters
-    RUN_NAME = "run 2 with 20 nodes"
+    RUN_NAME = "run 1 with 20 nodes"
     learning_rate = 0.001
     training_epochs = 100
-    display_step = 5
 
     # define the number of inputs and outputs in the neural network
 
@@ -57,29 +61,33 @@ def export():
 
     # input layer
     with tf.variable_scope('input'):
-        X = tf.placeholder(tf.float32, shape=(None,number_of_inputs))
+        X = tf.placeholder(tf.float32, shape=(None, number_of_inputs))
 
     # layer 1
     with tf.variable_scope('layer_1'):
-        weights = tf.get_variable(name='weights1', shape=[number_of_inputs, layer_1_nodes], initializer=tf.contrib.layers.xavier_initializer())
-        biases =tf.get_variable(name='biases1', shape=[layer_1_nodes],initializer=tf.zeros_initializer())
-        layer_1_outputs = tf.nn.relu(tf.add(tf.matmul(X,weights),biases))
+        weights = tf.get_variable(name='weights1', shape=[number_of_inputs, layer_1_nodes],
+                                  initializer=tf.contrib.layers.xavier_initializer())
+        biases = tf.get_variable(name='biases1', shape=[layer_1_nodes], initializer=tf.zeros_initializer())
+        layer_1_outputs = tf.nn.relu(tf.add(tf.matmul(X, weights), biases))
 
     # layer 2
     with tf.variable_scope('layer_2'):
-        weights = tf.get_variable(name='weights2', shape=[layer_1_nodes, layer_2_nodes], initializer=tf.contrib.layers.xavier_initializer())
-        biases =tf.get_variable(name='biases2', shape=[layer_2_nodes], initializer=tf.zeros_initializer())
+        weights = tf.get_variable(name='weights2', shape=[layer_1_nodes, layer_2_nodes],
+                                  initializer=tf.contrib.layers.xavier_initializer())
+        biases = tf.get_variable(name='biases2', shape=[layer_2_nodes], initializer=tf.zeros_initializer())
         layer_2_outputs = tf.nn.relu(tf.add(tf.matmul(layer_1_outputs, weights), biases))
 
     # layer 3
     with tf.variable_scope('layer_3'):
-        weights = tf.get_variable(name='weights3', shape=[layer_2_nodes, layer_3_nodes], initializer=tf.contrib.layers.xavier_initializer())
+        weights = tf.get_variable(name='weights3', shape=[layer_2_nodes, layer_3_nodes],
+                                  initializer=tf.contrib.layers.xavier_initializer())
         biases = tf.get_variable(name='biases3', shape=[layer_3_nodes], initializer=tf.zeros_initializer())
         layer_3_outputs = tf.nn.relu(tf.add(tf.matmul(layer_2_outputs, weights), biases))
 
     # output layer
     with tf.variable_scope('output'):
-        weights = tf.get_variable(name='weights4', shape=[layer_3_nodes, number_of_outputs],initializer=tf.contrib.layers.xavier_initializer())
+        weights = tf.get_variable(name='weights4', shape=[layer_3_nodes, number_of_outputs],
+                                  initializer=tf.contrib.layers.xavier_initializer())
         biases = tf.get_variable(name='biases4', shape=[number_of_outputs], initializer=tf.zeros_initializer())
         prediction = tf.nn.relu(tf.add(tf.matmul(layer_3_outputs, weights), biases))
 
@@ -112,8 +120,10 @@ def export():
             session.run(optimizer, feed_dict={X: X_scaled_training, Y: Y_scaled_training})
 
             if epoch % 5 == 0:
-                training_cost, training_summary = session.run([cost, summary], feed_dict={X: X_scaled_training, Y: Y_scaled_training})
-                testing_cost, testing_summary = session.run([cost, summary], feed_dict={X: X_scaled_testing, Y: Y_scaled_testing})
+                training_cost, training_summary = session.run([cost, summary],
+                                                              feed_dict={X: X_scaled_training, Y: Y_scaled_training})
+                testing_cost, testing_summary = session.run([cost, summary],
+                                                            feed_dict={X: X_scaled_testing, Y: Y_scaled_testing})
                 print(epoch, training_cost, testing_cost)
 
                 training_writer.add_summary(training_summary, epoch)
@@ -137,7 +147,7 @@ def export():
         print("The actual earnings of Game #1 were ${}".format(real_earnings))
         print("Our neural network predicted earnings of ${}".format(predicted_earnings))
 
-        save_path = saver.save(session, 'logs/trained_model.ckpt')
+        save_path = saver.save(session, paths.output('logs/trained_model.ckpt'))
         print("Model saved: {}".format(save_path))
 
         # saving the model using SavedModelBuilder
@@ -163,9 +173,9 @@ def export():
         )
 
         model_builder.save()
-        print("training is complete")
+        print("=======training is complete======")
 
-if __name__=="__main__":
 
-    print("something")
-    # export()
+if __name__ == "__main__":
+
+    entry_point()

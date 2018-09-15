@@ -9,17 +9,18 @@ __pycache__/
 
 # C extensions
 *.so
+Dockerfile
+run.py
 
 # Distribution / packaging
 .Python
 env/
 build/
 develop-eggs/
-
+dist/
 downloads/
 eggs/
 .eggs/
-.idea
 lib/
 lib64/
 parts/
@@ -29,9 +30,6 @@ var/
 .installed.cfg
 *.egg
 wheelhouse/
-*.idea/
+cover/
 *.manifest
 *.spec
-run.py
-Dockerfile
-
