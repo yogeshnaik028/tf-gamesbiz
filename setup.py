@@ -15,8 +15,4 @@ setup(
         'scikit-learn',
         'tensorflow',
     ],
-    entrypoint={
-        "prefix": "gamesbiz.train",
-        "func": "export"
-    }
 )

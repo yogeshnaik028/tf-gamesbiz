@@ -1,4 +1,4 @@
-## Packaged Python Alogrithm for Predicting Video Game Earnings
+## Packaged Python Algorithm for Predicting Video Game Earnings
 
 ----
 
@@ -18,20 +18,12 @@ Its a simple fully connected neural network model (preceptron) with hyperparamet
 
 **Note**:
 Since this is a simple example, data is fed to the tensorflow model an array that was pre-loaded into memory.
-in case you are using python3.7 then install tensorflow in the following way:
-
-```
-pip install https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.8.0-py3-none-any.whl
-```
-
 
 ----
-
 
 ### Built primarily With
 
 * [Tensorflow](https://www.tensorflow.org/) - Open Source Machine Learning framework
-
 
 
 ### Authors
