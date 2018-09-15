@@ -1,4 +1,5 @@
 from setuptools import setup, find_packages
+
 setup(
     name='gamesbiz',
     version='0.0.1rc0',
