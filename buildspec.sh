@@ -8,7 +8,7 @@ export pkg_version=$(ps -ef | awk '{ if ($1 ~ /^Version:/) print $2}' *.egg-info
 if [ -f "$pkg_name.egg-info/requires.txt" ]; then
    echo "requires.txt file exists."
 else
-   echo "requires.txt file exists."
+   echo "requires.txt file does not exists."
 fi
 export dependencies=""
 while read -r line

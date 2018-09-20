@@ -46,10 +46,6 @@ class resource(object):
             return handle.read()
 
 
-# ------------------------------------------------------------------------------
-# SageMaker Paths
-# ------------------------------------------------------------------------------
-
 class sagemaker(object):
 
     @staticmethod
@@ -73,9 +69,6 @@ class sagemaker(object):
     def output(filename):
         return os.path.join(*[os.sep, 'opt', 'ml', 'model', filename])
 
-# ------------------------------------------------------------------------------
-# Local Paths
-# ------------------------------------------------------------------------------
 
 class local(object):
 
@@ -95,10 +88,6 @@ class local(object):
     def output(filename):
         return resource.filename(location, filename)
 
-
-# ------------------------------------------------------------------------------
-# Path Selector
-# ------------------------------------------------------------------------------
 
 class paths(object):
 

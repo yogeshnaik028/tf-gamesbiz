@@ -113,8 +113,8 @@ def entry_point():
         # initialize all wa
         session.run(tf.global_variables_initializer())
 
-        training_writer = tf.summary.FileWriter('./logs/{}/training'.format(RUN_NAME), session.graph)
-        testing_writer = tf.summary.FileWriter('./logs/{}/testing'.format(RUN_NAME), session.graph)
+        training_writer = tf.summary.FileWriter(paths.output('./logs/{}/training'.format(RUN_NAME)), session.graph)
+        testing_writer = tf.summary.FileWriter(paths.output('./logs/{}/testing'.format(RUN_NAME)), session.graph)
 
         for epoch in range(training_epochs):
             session.run(optimizer, feed_dict={X: X_scaled_training, Y: Y_scaled_training})
