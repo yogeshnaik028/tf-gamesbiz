@@ -1,1 +1,2 @@
-recursive-include gamesbiz/data/ *.csv *.json
+recursive-include gamesbiz/data/ *.csv
+recursive-include gamesbiz/data/ *.json
