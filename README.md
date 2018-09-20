@@ -14,13 +14,13 @@ The aim of this project is to serve as a simple example of implementing a model 
 
 ```
 setup(
-   ....
+   ...
 
      entry_point={
         "gamesbiz.train":"entry_point"
     }
 
-   ....
+   ...
 )
 ```
 
