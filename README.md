@@ -12,7 +12,7 @@ The aim of this project is to serve as a simple example of implementing a model 
 
 3. Specify the "entry_point" in _setup.py_ which is the actual function SageMaker execute to run the container
 
-````
+```
 setup(
    ...
 
@@ -22,7 +22,7 @@ setup(
 
    ...
 )
-````
+```
 
 ### Description of Model
 
