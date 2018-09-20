@@ -32,3 +32,5 @@ wheelhouse/
 cover/
 *.manifest
 *.spec
+buildspec.sh
+
