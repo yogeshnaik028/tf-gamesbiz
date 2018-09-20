@@ -1,12 +1,12 @@
 # Mac
 .DS_Store
+buildspec.sh
 .idea/
 ### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
-buildspec.sh
 
 # C extensions
 *.so
