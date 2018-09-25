@@ -10,7 +10,7 @@ The aim of this project is to serve as a simple example of implementing tensorfl
 
 2. Using version 3.6+ of python
 
-3. Specify the "entry_point" in _setup.py_ which is the actual function SageMaker execute to run the container where as "gamesbiz.train" should refer to the
+3. Specify the "entry_point" in setup.py which is the actual function SageMaker execute to run the container where as "gamesbiz.train" should refer to the module or sub-module path (depending on the contents of the __init__.py at the top level of the module)
 
 ```
 setup(
@@ -29,7 +29,9 @@ pipeline to abstract out all the information needed to build a SageMaker compati
 ### Description of Model
 
 Its a simple fully connected neural network model (multilayer preceptron)
+
 The training and testing data set are mounted to the SageMaker managed docker container in "/opt/ml/input/data/training"
+
 The Trained model artifact can be saved to "/opt/ml/output/model" within the container and this gets zipped and pushed to S3 location
 
 **Note**:
