@@ -1,8 +1,8 @@
-## Packaged Python Algorithm for Predicting Video Game Earnings
+## Packaged Python Algorithm for Predicting Video Games Earnings
 
 ----
 
-The aim of this project is to serve as a simple example of implementing a model in tensorflow.
+The aim of this project is to serve as a simple example of implementing tensorflow model to be used with the [sagemaker-pipeline]() project .
 
 ### Prerequisites
 
@@ -10,7 +10,7 @@ The aim of this project is to serve as a simple example of implementing a model 
 
 2. Using version 3.6+ of python
 
-3. Specify the "entry_point" in _setup.py_ which is the actual function SageMaker execute to run the container
+3. Specify the "entry_point" in _setup.py_ which is the actual function SageMaker execute to run the container where as "gamesbiz.train" should refer to the
 
 ```
 setup(
@@ -23,11 +23,14 @@ setup(
    ...
 )
 ```
+**Note**: As you can see above we assume that the setup() function requires the additional *entry_point={...}* argument which allows the
+pipeline to abstract out all the information needed to build a SageMaker compatible docker image.
 
 ### Description of Model
 
-Its a simple fully connected neural network model (preceptron) with hyperparameters.json showing the hyperparameter values
-
+Its a simple fully connected neural network model (multilayer preceptron)
+The training and testing data set are mounted to the SageMaker managed docker container in "/opt/ml/input/data/training"
+The Trained model artifact can be saved to "/opt/ml/output/model" within the container and this gets zipped and pushed to S3 location
 
 **Note**:
 Since this is a simple example, data is fed to the tensorflow model an array that was pre-loaded into memory.
