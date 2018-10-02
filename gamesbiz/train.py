@@ -1,4 +1,5 @@
 import os
+import json
 
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
@@ -6,11 +7,23 @@ import tensorflow as tf
 
 from gamesbiz.resolve import paths
 
+def read_config_file(config_json):
+    """
+    This function reads in a json file like hyperparameters.json or resourceconfig.json
+    :param config_json: this is a string path to the location of the file (for both sagemaker or local)
+    :return: a python dict is returned
+    """
+    config_path = paths.config(config_json)
+    if os.path.exists(config_path):
+        json_data = open(config_path).read()
+        return(json.loads(json_data))
+
+
 
 def entry_point():
     """
     This function acts as the entry point for a docker container that an be used to train
-    the model either loally or on Sagemaker depending in whichever context its called in.
+    the model either locally or on Sagemaker depending in whichever context its called in as per resolve.paths class.
 
     """
 
@@ -24,7 +37,7 @@ def entry_point():
     Y_training = training_data_df[['total_earnings']].values
 
     # load testing data set from csv file
-    test_data_df = pd.read_csv(paths.input('training', 'sales_data_test.csv'), dtype=float)
+    test_data_df = pd.read_csv(paths.input('testing', 'sales_data_test.csv'), dtype=float)
 
     X_testing = test_data_df.drop('total_earnings', axis=1).values
     Y_testing = test_data_df[['total_earnings']].values
@@ -41,24 +54,25 @@ def entry_point():
     X_scaled_testing = X_scaler.transform(X_testing)
     Y_scaled_testing = Y_scaler.transform(Y_testing)
 
+    # read in hyperparameters from hyperparameters.json file
+    hyper_params = read_config_file('hyperparameters.json')
+
     # define model parameters
     RUN_NAME = "run 1 with 20 nodes"
-    learning_rate = 0.001
-    training_epochs = 100
+    learning_rate = float(hyper_params['learning_rate'])
+    training_epochs = int(hyper_params['training_epochs'])
+
 
     # define the number of inputs and outputs in the neural network
-
     number_of_inputs = 9
     number_of_outputs = 1
 
     # how many neurons do we want in each layer of the network
-
-    layer_1_nodes = 20
-    layer_2_nodes = 100
-    layer_3_nodes = 50
+    layer_1_nodes = int(hyper_params['layer_1_nodes'])
+    layer_2_nodes = int(hyper_params['layer_2_nodes'])
+    layer_3_nodes = int(hyper_params['layer_3_nodes'])
 
     # section one: define the layers of the NN itself
-
     # input layer
     with tf.variable_scope('input'):
         X = tf.placeholder(tf.float32, shape=(None, number_of_inputs))
@@ -173,7 +187,7 @@ def entry_point():
         )
 
         model_builder.save()
-        print("=======training is complete======")
+    print("=======training is complete======")
 
 
 if __name__ == "__main__":

@@ -28,23 +28,6 @@ class resource(object):
     def exists(package, filename):
         return os.path.exists(resource.filename(package, filename))
 
-    @staticmethod
-    def stream(package, filename):
-        return open(resource.filename(package, filename), 'r')
-
-    @staticmethod
-    def isdir(package, filename):
-        os.path.isdir(resource.filename(package, filename))
-
-    @staticmethod
-    def listdir(package, filename):
-        os.listdir(resource.filename(package, filename))
-
-    @staticmethod
-    def string(package, filename):
-        with open(resource.filename(package, filename), 'r') as handle:
-            return handle.read()
-
 
 class sagemaker(object):
 
@@ -60,6 +43,10 @@ class sagemaker(object):
     @staticmethod
     def input(channel, filename):
         return os.path.join(*[os.sep, 'opt', 'ml', 'input', 'data', channel, filename])
+
+    @staticmethod
+    def config(filename):
+        return os.path.join(*[os.sep, 'opt', 'ml', 'input', 'config', filename])
 
     @staticmethod
     def failure():
@@ -78,6 +65,10 @@ class local(object):
 
     @staticmethod
     def input(channel, filename):
+        return resource.filename(location, filename)
+
+    @staticmethod
+    def config(filename):
         return resource.filename(location, filename)
 
     @staticmethod
@@ -104,6 +95,10 @@ class paths(object):
     @staticmethod
     def input(channel, filename):
         return paths.base().input(channel, filename)
+
+    @staticmethod
+    def config(filename):
+        return paths.base().config(filename)
 
     @staticmethod
     def failure():
