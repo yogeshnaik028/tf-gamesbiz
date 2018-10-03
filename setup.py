@@ -16,7 +16,10 @@ setup(
         'scikit-learn',
         'tensorflow',
     ],
-    entry_point={
-        "gamesbiz.train":"entry_point"
+
+    entry_points={
+       "gamesbiz.training": [
+           "train=gamesbiz.train:entry_point",
+       ]
     }
 )
