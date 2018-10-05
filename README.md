@@ -10,7 +10,6 @@ The aim of this project is to serve as a simple example of implementing tensorfl
 
 2. Using version 3.6+ of python
 
-3. Specify the "entry_point" in setup.py which is the actual function SageMaker execute to run the container where as "gamesbiz.train" should refer to the module or sub-module path (depending on the contents of the __init__.py at the top level of the module)
 
 ### Running Model locally
 
@@ -26,6 +25,10 @@ python3 gamesbiz/train.py
 
 ```
 
+### Running Model on Amazon SageMaker
+
+Follow the instructions in [sagemaker-pipeline](https://github.com/MustafaWaheed91/sagemaker-pipeline) project to see how to use the model
+in this package to run with SageMaker training pipeline.
 
 ----
 
