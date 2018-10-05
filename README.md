@@ -2,7 +2,7 @@
 
 ----
 
-The aim of this project is to serve as a simple example of implementing tensorflow model to be used with the [sagemaker-pipeline]() project .
+The aim of this project is to serve as a simple example of implementing tensorflow model to be used with the [sagemaker-pipeline](https://github.com/MustafaWaheed91/sagemaker-pipeline) project.
 
 ### Prerequisites
 
@@ -12,34 +12,24 @@ The aim of this project is to serve as a simple example of implementing tensorfl
 
 3. Specify the "entry_point" in setup.py which is the actual function SageMaker execute to run the container where as "gamesbiz.train" should refer to the module or sub-module path (depending on the contents of the __init__.py at the top level of the module)
 
+### Running Model locally
+
 ```
-setup(
-   ...
 
-     entry_point={
-        "gamesbiz.train":"entry_point"
-    }
+git clone https://github.com/MustafaWaheed91/tf-gamesbiz.git
 
-   ...
-)
+cd tf-gamesbiz
+
+pip3 install -e .
+
+python3 gamesbiz/train.py
+
 ```
-**Note**: As you can see above we assume that the setup() function requires the additional *entry_point={...}* argument which allows the
-pipeline to abstract out all the information needed to build a SageMaker compatible docker image.
 
-### Description of Model
-
-Its a simple fully connected neural network model (multilayer preceptron)
-
-The training and testing data set are mounted to the SageMaker managed docker container in "/opt/ml/input/data/training"
-
-The Trained model artifact can be saved to "/opt/ml/output/model" within the container and this gets zipped and pushed to S3 location
-
-**Note**:
-Since this is a simple example, data is fed to the tensorflow model an array that was pre-loaded into memory.
 
 ----
 
-### Built primarily With
+### Built primarily with
 
 * [Tensorflow](https://www.tensorflow.org/) - Open Source Machine Learning framework
 
