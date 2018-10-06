@@ -1,5 +1,5 @@
-import pkgutil
-import sys
+# import pkgutil
+# import sys
 import os
 import types
 
@@ -9,19 +9,9 @@ import gamesbiz.data as location
 class resource(object):
     @staticmethod
     def filename(package, filename):
-
         if isinstance(package, types.ModuleType):
-            mod = package
-        else:
-            loader = pkgutil.get_loader(package)
-            if loader is None or not hasattr(loader, 'get_data'):
-                return None
-            mod = sys.modules.get(package) or loader.load_module(package)
-            if mod is None or not hasattr(mod, '__file__'):
-                return None
-
-        parts = filename.split('/')
-        parts.insert(0, os.path.dirname(mod.__file__))
+            parts = filename.split('/')
+            parts.insert(0, os.path.dirname(package.__file__))
         return os.path.join(*parts)
 
     @staticmethod
