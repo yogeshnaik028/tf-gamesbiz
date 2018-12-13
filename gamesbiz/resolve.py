@@ -1,5 +1,3 @@
-# import pkgutil
-# import sys
 import os
 import types
 

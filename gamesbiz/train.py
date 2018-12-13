@@ -7,6 +7,7 @@ import tensorflow as tf
 
 from gamesbiz.resolve import paths
 
+
 def read_config_file(config_json):
     """
     This function reads in a json file like hyperparameters.json or resourceconfig.json
@@ -26,7 +27,6 @@ def entry_point():
     the model either locally or on Sagemaker depending in whichever context its called in as per resolve.paths class.
 
     """
-
     # Turn off TensorFlow warning messages in program output
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 

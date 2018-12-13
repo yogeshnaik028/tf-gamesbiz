@@ -15,11 +15,17 @@ setup(
         'pandas',
         'scikit-learn',
         'tensorflow',
+        'flask',
+        'gunicorn',
+        'gevent'
     ],
 
     entry_points={
-       "gamesbiz.training": [
-           "train=gamesbiz.train:entry_point",
-       ]
+        "gamesbiz.training": [
+           "train=gamesbiz.train:entry_point"
+        ],
+        "gamesbiz.hosting": [
+           "serve=gamesbiz.server:start_server"
+        ]
     }
 )
