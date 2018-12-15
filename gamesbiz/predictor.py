@@ -6,8 +6,6 @@ import json
 
 import flask
 
-from gamesbiz.resolve import paths
-
 
 class ScoringService(object):
     model = None
