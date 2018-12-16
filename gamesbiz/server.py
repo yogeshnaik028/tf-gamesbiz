@@ -14,9 +14,11 @@
 from __future__ import print_function
 import multiprocessing
 import os
+from pkg_resources import resource_filename
 import signal
 import subprocess
 import sys
+
 
 cpu_count = multiprocessing.cpu_count()
 
@@ -43,7 +45,7 @@ def start_server():
     subprocess.check_call(['ln', '-sf', '/dev/stdout', '/var/log/nginx/access.log'])
     subprocess.check_call(['ln', '-sf', '/dev/stderr', '/var/log/nginx/error.log'])
 
-    nginx = subprocess.Popen(['nginx', '-c', './nginx.conf'])
+    nginx = subprocess.Popen(['nginx', '-c', resource_filename(__name__, 'nginx.conf')])
     gunicorn = subprocess.Popen(['gunicorn',
                                  '--timeout', str(model_server_timeout),
                                  '-k', 'gevent',

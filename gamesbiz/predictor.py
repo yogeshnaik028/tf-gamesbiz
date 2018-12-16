@@ -2,6 +2,7 @@
 # implement the scoring for your own algorithm.
 
 from __future__ import print_function
+
 import json
 
 import flask
