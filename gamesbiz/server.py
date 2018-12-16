@@ -51,7 +51,7 @@ def start_server():
                                  '-k', 'gevent',
                                  '-b', 'unix:/tmp/gunicorn.sock',
                                  '-w', str(model_server_workers),
-                                 resource_filename(__name__,'wsgi:app')])
+                                 'gamesbiz.wsgi:app'])
 
     signal.signal(signal.SIGTERM, lambda a, b: sigterm_handler(nginx.pid, gunicorn.pid))
 
