@@ -44,4 +44,4 @@ def transformation():
 
     result = {str(type(data)): json.dumps(data)}
 
-    return flask.Response(response=json.dumps(result), status=200, mimetype='application/json')
+    return flask.Response(response=result, status=200, mimetype='application/json')
