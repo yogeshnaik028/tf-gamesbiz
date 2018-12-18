@@ -42,8 +42,6 @@ def transformation():
     else:
         return flask.Response(response='This predictor only supports JSON data', status=415, mimetype='text/plain')
 
-    print('Invoked with {} records'.format(data.shape[0]))
-
     result = {str(type(data)): json.dumps(data)}
 
     return flask.Response(response=json.dumps(result), status=200, mimetype='application/json')
