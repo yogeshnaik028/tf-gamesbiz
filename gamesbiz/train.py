@@ -4,6 +4,7 @@ import json
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 import tensorflow as tf
+from sklearn.externals import joblib
 
 from gamesbiz.resolve import paths
 
@@ -54,6 +55,16 @@ def entry_point():
     X_scaled_testing = X_scaler.transform(X_testing)
     Y_scaled_testing = Y_scaler.transform(Y_testing)
 
+    # create a simple json file to be later used by the inference image
+    xscaler_filename = paths.model("X_scaler.save")
+    yscaler_filename = paths.model("Y_scaler.save")
+
+    joblib.dump(X_scaler, xscaler_filename)
+    joblib.dump(Y_scaler, yscaler_filename)
+
+    # create an empty dict to hold epoch, training cost and testing cost
+    master_cost_holder = dict()
+
     # read in hyperparameters from hyperparameters.json file
     hyper_params = read_config_file('hyperparameters.json')
 
@@ -79,8 +90,7 @@ def entry_point():
 
     # layer 1
     with tf.variable_scope('layer_1'):
-        weights = tf.get_variable(name='weights1', shape=[number_of_inputs, layer_1_nodes],
-                                  initializer=tf.contrib.layers.xavier_initializer())
+        weights = tf.get_variable(name='weights1', shape=[number_of_inputs, layer_1_nodes], initializer=tf.contrib.layers.xavier_initializer())
         biases = tf.get_variable(name='biases1', shape=[layer_1_nodes], initializer=tf.zeros_initializer())
         layer_1_outputs = tf.nn.relu(tf.add(tf.matmul(X, weights), biases))
 
@@ -140,6 +150,15 @@ def entry_point():
                                                             feed_dict={X: X_scaled_testing, Y: Y_scaled_testing})
                 print(epoch, training_cost, testing_cost)
 
+                # write out training cost and testing cost per epoch to be read into dynamo later
+                per_epoch_cost = {
+                    "epoch": epoch,
+                    "training_cost": training_cost,
+                    "testing_cost": testing_cost
+                }
+
+                master_cost_holder.update(per_epoch_cost)
+
                 training_writer.add_summary(training_summary, epoch)
                 testing_writer.add_summary(testing_summary, epoch)
 
@@ -185,8 +204,11 @@ def entry_point():
             signature_def_map={tf.saved_model.signature_constants.DEFAULT_SERVING_SIGNATURE_DEF_KEY: signature_def},
             tags=[tf.saved_model.tag_constants.SERVING]
         )
-
         model_builder.save()
+
+    with open(paths.model('cost.json'), 'w') as outfile:
+        json.dumps(master_cost_holder, outfile)
+
     print("=======training is complete======")
 
 
