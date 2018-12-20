@@ -207,8 +207,7 @@ def entry_point():
         model_builder.save()
 
     with open(paths.model('cost.json'), 'w') as outfile:
-        json.dump(json.dumps(master_cost_holder), outfile)
-
+        json.dump(master_cost_holder, outfile)
     print("=======training is complete======")
 
 
