@@ -152,7 +152,7 @@ def entry_point():
 
                 # write out training cost and testing cost per epoch to be read into dynamo later
                 per_epoch_cost = {
-                    str(epoch): {"training_cost": training_cost, "testing_cost": testing_cost}
+                   str(epoch): {"training_cost": str(training_cost), "testing_cost": str(testing_cost)}
                 }
 
                 master_cost_holder.update(per_epoch_cost)
@@ -210,5 +210,4 @@ def entry_point():
 
 
 if __name__ == "__main__":
-
     entry_point()
