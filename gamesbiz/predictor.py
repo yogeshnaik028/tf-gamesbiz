@@ -50,7 +50,7 @@ def transformation():
     if flask.request.content_type == 'application/json':
         data = flask.request.data.decode('utf-8')
 
-        data = pd.read_json(data, lines=True)
+        data = pd.read_json(json.dumps(data), lines=True)
 
         X_scaler = joblib.load(os.path.join(paths.model('X_scaler.save')))
         scaled_data = X_scaler.transform(data.values)
