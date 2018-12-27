@@ -10,16 +10,14 @@ from gamesbiz.resolve import paths
 
 
 def read_config_file(config_json):
-    """
-    This function reads in a json file like hyperparameters.json or resourceconfig.json
+    """This function reads in a json file like hyperparameters.json or resourceconfig.json
     :param config_json: this is a string path to the location of the file (for both sagemaker or local)
-    :return: a python dict is returned
-    """
+    :return: a python dict is returned"""
+
     config_path = paths.config(config_json)
     if os.path.exists(config_path):
         json_data = open(config_path).read()
         return(json.loads(json_data))
-
 
 
 def entry_point():
@@ -152,7 +150,7 @@ def entry_point():
 
                 # write out training cost and testing cost per epoch to be read into dynamo later
                 per_epoch_cost = {
-                   str(epoch): {"training_cost": str(training_cost), "testing_cost": str(testing_cost)}
+                   epoch: {"training_cost": str(training_cost), "testing_cost": str(testing_cost)}
                 }
 
                 master_cost_holder.update(per_epoch_cost)
@@ -206,7 +204,6 @@ def entry_point():
 
     with open(paths.model('cost.json'), 'w') as outfile:
         json.dump(master_cost_holder, outfile)
-    print("=======training is complete======")
 
 
 if __name__ == "__main__":

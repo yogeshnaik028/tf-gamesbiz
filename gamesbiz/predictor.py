@@ -2,10 +2,14 @@
 # implement the scoring for your own algorithm.
 
 from __future__ import print_function
-
+import os
 import json
-
 import flask
+import pandas as pd
+from tensorflow.contrib import predictor
+from sklearn.externals import joblib
+
+from gamesbiz.resolve import paths
 
 
 class ScoringService(object):
@@ -13,9 +17,12 @@ class ScoringService(object):
 
     @classmethod
     def get_model(cls):
+        """This class method just checks if the model path is available to us"""
 
-        cls.model = 1
-        return cls.model
+        if os.path.exists(paths.model('exported_model/')):
+            cls.model = True
+        else:
+            cls.model = None
 
 
 app = flask.Flask(__name__)
@@ -32,16 +39,30 @@ def ping():
 
 @app.route('/invocations', methods=['POST'])
 def transformation():
+    """This method reads in the data (json object) sent with the request and returns a prediction
+    as response """
 
     data = None
+    export_path = 'exported_model/'
 
     if flask.request.content_type == 'application/json':
         data = flask.request.data.decode('utf-8')
-        # s = StringIO.StringIO(data)
-        # data = pd.read_csv(s, header=None)
+
+        data = pd.read_json(data, lines=True)
+
+        X_scaler = joblib.load(os.path.join(paths.model('X_scaler.save')))
+        scaled_data = X_scaler.transform(data.values)
+
+        predict_fn = predictor.from_saved_model(paths.model(export_path))
+        predictions = predict_fn({'input': scaled_data})
+        prediction = predictions['earnings'][0][0]
+
+        Y_scaler = joblib.load(os.path.join(paths.model('Y_scaler.save')))
+        true_prediction = {'earnings': round((float(prediction) - Y_scaler.min_[0]) / Y_scaler.scale_[0], 3)}
+        true_prediction = json.dumps(true_prediction)
     else:
         return flask.Response(response='This predictor only supports JSON data', status=415, mimetype='text/plain')
 
-    result = str({str(type(data)): str(data)})
+    result = true_prediction
 
     return flask.Response(response=result, status=200, mimetype='application/json')
