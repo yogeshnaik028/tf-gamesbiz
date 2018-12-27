@@ -24,6 +24,8 @@ class ScoringService(object):
         else:
             cls.model = None
 
+        return cls.model
+
 
 app = flask.Flask(__name__)
 
