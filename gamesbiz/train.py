@@ -88,9 +88,9 @@ def entry_point():
     #layer_3_nodes = int(hyper_params['layer_3_nodes'])
 
     #for testing
-    layer_1_node = 50
-    layer_2_node = 100
-    layer_3_node = 50
+    layer_1_nodes = 50
+    layer_2_nodes = 100
+    layer_3_nodes = 50
     
     # section one: define the layers of the NN itself
     # input layer
