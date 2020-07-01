@@ -69,9 +69,11 @@ def entry_point():
 
     # define model parameters
     RUN_NAME = "run 1 with 20 nodes"
-    learning_rate = float(hyper_params['learning_rate'])
-    training_epochs = int(hyper_params['training_epochs'])
-
+    #learning_rate = float(hyper_params['learning_rate'])
+    #training_epochs = int(hyper_params['training_epochs'])
+    #for testing
+    learning_rate = 0.001
+    training_epoches = 100
 
     # define the number of inputs and outputs in the neural network
     number_of_inputs = 9
