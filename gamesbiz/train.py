@@ -4,7 +4,8 @@ import json
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 import tensorflow as tf
-from sklearn.externals import joblib
+#from sklearn.externals import joblib
+import joblib
 
 from gamesbiz.resolve import paths
 
