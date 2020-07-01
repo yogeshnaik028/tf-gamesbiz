@@ -92,47 +92,55 @@ def entry_point():
     
     # section one: define the layers of the NN itself
     # input layer
-    with tf.variable_scope('input'):
+    #with tf.variable_scope('input'):
+    with tf.compat.v1.variable_scope('input'):
         X = tf.placeholder(tf.float32, shape=(None, number_of_inputs))
 
     # layer 1
-    with tf.variable_scope('layer_1'):
+    #with tf.variable_scope('layer_1'):
+    with tf.compat.v1.variable_scope('layer_1'):      
         weights = tf.get_variable(name='weights1', shape=[number_of_inputs, layer_1_nodes], initializer=tf.contrib.layers.xavier_initializer())
         biases = tf.get_variable(name='biases1', shape=[layer_1_nodes], initializer=tf.zeros_initializer())
         layer_1_outputs = tf.nn.relu(tf.add(tf.matmul(X, weights), biases))
 
     # layer 2
-    with tf.variable_scope('layer_2'):
+    # with tf.variable_scope('layer_2'):
+    with tf.compat.v1.variable_scope('layer_2'):           
         weights = tf.get_variable(name='weights2', shape=[layer_1_nodes, layer_2_nodes],
                                   initializer=tf.contrib.layers.xavier_initializer())
         biases = tf.get_variable(name='biases2', shape=[layer_2_nodes], initializer=tf.zeros_initializer())
         layer_2_outputs = tf.nn.relu(tf.add(tf.matmul(layer_1_outputs, weights), biases))
 
     # layer 3
-    with tf.variable_scope('layer_3'):
+    # with tf.variable_scope('layer_3'):
+    with tf.compat.v1.variable_scope('layer_3'):         
         weights = tf.get_variable(name='weights3', shape=[layer_2_nodes, layer_3_nodes],
                                   initializer=tf.contrib.layers.xavier_initializer())
         biases = tf.get_variable(name='biases3', shape=[layer_3_nodes], initializer=tf.zeros_initializer())
         layer_3_outputs = tf.nn.relu(tf.add(tf.matmul(layer_2_outputs, weights), biases))
 
     # output layer
-    with tf.variable_scope('output'):
+    # with tf.variable_scope('output'):
+    with tf.compat.v1.variable_scope('output'): 
         weights = tf.get_variable(name='weights4', shape=[layer_3_nodes, number_of_outputs],
                                   initializer=tf.contrib.layers.xavier_initializer())
         biases = tf.get_variable(name='biases4', shape=[number_of_outputs], initializer=tf.zeros_initializer())
         prediction = tf.nn.relu(tf.add(tf.matmul(layer_3_outputs, weights), biases))
 
     # cost function with scalar output
-    with tf.variable_scope('cost'):
+    # with tf.variable_scope('cost'):
+    with tf.compat.v1.variable_scope('cost'): 
         Y = tf.placeholder(tf.float32, shape=(None, 1))
         cost = tf.reduce_mean(tf.squared_difference(prediction, Y))
 
     # optimization operation on the graph
-    with tf.variable_scope('train'):
+    # with tf.variable_scope('train'):
+    with tf.compat.v1.variable_scope('train'): 
         optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)
 
     # logging tr.summary objects
-    with tf.variable_scope('logging'):
+    # with tf.variable_scope('logging'):
+    with tf.compat.v1.variable_scope('logging'): 
         tf.summary.scalar('current cost', cost)
         tf.summary.histogram('predicted_value', prediction)
         summary = tf.summary.merge_all()
