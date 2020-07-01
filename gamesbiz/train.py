@@ -72,7 +72,8 @@ def entry_point():
     #learning_rate = float(hyper_params['learning_rate'])
     #training_epochs = int(hyper_params['training_epochs'])
     #for testing
-    learning_rate = 0.001
+    #learning_rate = 0.001
+    learning_rate = 0.01
     training_epoches = 100
 
     # define the number of inputs and outputs in the neural network
@@ -80,10 +81,15 @@ def entry_point():
     number_of_outputs = 1
 
     # how many neurons do we want in each layer of the network
-    layer_1_nodes = int(hyper_params['layer_1_nodes'])
-    layer_2_nodes = int(hyper_params['layer_2_nodes'])
-    layer_3_nodes = int(hyper_params['layer_3_nodes'])
+    #layer_1_nodes = int(hyper_params['layer_1_nodes'])
+    #layer_2_nodes = int(hyper_params['layer_2_nodes'])
+    #layer_3_nodes = int(hyper_params['layer_3_nodes'])
 
+    #for testing
+    layer_1_node = 50
+    layer_2_node = 100
+    layer_3_node = 50
+    
     # section one: define the layers of the NN itself
     # input layer
     with tf.variable_scope('input'):
